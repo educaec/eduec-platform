@@ -14,9 +14,7 @@ export default function Dashboard() {
       {/* GRID GENERAL */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-        {/* -------------------------------- */}
         {/* COLUMNA 1 — PROGRESO GENERAL */}
-        {/* -------------------------------- */}
         <div className="
           bg-white/10 backdrop-blur-lg border border-white/10 rounded-2xl p-6 
           shadow-lg h-max
@@ -39,9 +37,7 @@ export default function Dashboard() {
           <p className="text-sm text-gray-300 mt-2">35% completado</p>
         </div>
 
-        {/* -------------------------------- */}
         {/* COLUMNA 2 — CURSOS EN PROGRESO */}
-        {/* -------------------------------- */}
         <div className="lg:col-span-2 space-y-6">
 
           <h2 className="text-xl font-semibold mb-2">Cursos en progreso</h2>
@@ -90,9 +86,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* -------------------------------- */}
       {/* SIMULADORES */}
-      {/* -------------------------------- */}
       <h2 className="text-2xl font-semibold mt-16 mb-6">Simuladores</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -118,7 +112,19 @@ export default function Dashboard() {
           shadow-lg transition hover:bg-white/15
         ">
           <h3 className="text-xl font-semibold mb-3">Simulador de Lenguaje</h3>
-          <p className="text-gray-300 mb-6">Practica comprensión lectora y gramática
+          <p className="text-gray-300 mb-6">
+            Practica comprensión lectora y gramática.
+          </p>
+          <a 
+            href="/simulador-lenguaje"
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition"
+          >
+            Ir al simulador
+          </a>
+        </div>
+
+      </div>
+
       {/* ESTADÍSTICAS */}
       <h2 className="text-2xl font-semibold mt-16 mb-6">Estadísticas</h2>
 
@@ -135,10 +141,7 @@ export default function Dashboard() {
               <span>60%</span>
             </div>
             <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-blue-500"
-                style={{ width: "60%" }}
-              />
+              <div className="h-full bg-blue-500" style={{ width: "60%" }} />
             </div>
           </div>
 
@@ -149,10 +152,7 @@ export default function Dashboard() {
               <span>45%</span>
             </div>
             <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-blue-400"
-                style={{ width: "45%" }}
-              />
+              <div className="h-full bg-blue-400" style={{ width: "45%" }} />
             </div>
           </div>
 
@@ -163,11 +163,13 @@ export default function Dashboard() {
               <span>30%</span>
             </div>
             <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-blue-300"
-                style={{ width: "30%" }}
-              />
+              <div className="h-full bg-blue-300" style={{ width: "30%" }} />
             </div>
           </div>
+
         </div>
       </div>
+
+    </div>
+  );
+}
