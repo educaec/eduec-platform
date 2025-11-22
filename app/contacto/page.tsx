@@ -57,116 +57,89 @@ export default function ContactoPage() {
       <div id="formulario" className="mt-20">
         <h2 className="text-3xl font-semibold mb-6">Envíanos un mensaje</h2>
 
-        <form
-          onSubmit={handleSubmit}
-          className="
-            bg-white/80 backdrop-blur-xl
-            border border-gray-200 
-            shadow-xl rounded-2xl
-            p-8 space-y-6
-          "
-        >
-          {/* Nombre */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Nombre completo
-            </label>
-            <input
-              type="text"
-              required
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              className="
-                w-full px-4 py-3 border border-gray-300 rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-blue-600
-                text-gray-800
-              "
-            />
-          </div>
+      <form
+  onSubmit={handleSubmit}
+  className="
+    bg-white/80 backdrop-blur-xl
+    border border-gray-200 
+    shadow-xl rounded-2xl
+    p-8 space-y-6
+  "
+>
+  <div>
+    <label className="block text-gray-700 font-medium mb-2" htmlFor="nombre">
+      Nombre completo
+    </label>
+    <input
+      id="nombre"
+      type="text"
+      value={nombre}
+      onChange={(e) => setNombre(e.target.value)}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+    />
+  </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="
-                w-full px-4 py-3 border border-gray-300 rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-blue-600
-                text-gray-800
-              "
-            />
-          </div>
+  <div>
+    <label className="block text-gray-700 font-medium mb-2" htmlFor="email">
+      Correo electrónico
+    </label>
+    <input
+      id="email"
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+    />
+  </div>
 
-          {/* Motivo */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Motivo del contacto
-            </label>
-            <select
-              required
-              value={motivo}
-              onChange={(e) => setMotivo(e.target.value)}
-              className="
-                w-full px-4 py-3 border border-gray-300 rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-blue-600
-                text-gray-800
-              "
-            >
-              <option value="colaboracion">Trabaje / Colabore con nosotros</option>
-              <option value="asesoria">Asesoría académica</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
+  <div>
+    <label className="block text-gray-700 font-medium mb-2" htmlFor="motivo">
+      Motivo del contacto
+    </label>
+    <select
+      id="motivo"
+      value={motivo}
+      onChange={(e) => setMotivo(e.target.value)}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+    >
+      <option value="colaboracion">Trabaje / Colabore con nosotros</option>
+      <option value="asesoria">Asesoría académica</option>
+      <option value="otro">Otro</option>
+    </select>
+  </div>
 
-          {/* Mensaje */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Mensaje
-            </label>
-            <textarea
-              required
-              rows={5}
-              value={mensaje}
-              onChange={(e) => setMensaje(e.target.value)}
-              className="
-                w-full px-4 py-3 border border-gray-300 rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-blue-600
-                text-gray-800
-              "
-            ></textarea>
-          </div>
+  <div>
+    <label className="block text-gray-700 font-medium mb-2" htmlFor="mensaje">
+      Mensaje
+    </label>
+    <textarea
+      id="mensaje"
+      rows={5}
+      value={mensaje}
+      onChange={(e) => setMensaje(e.target.value)}
+      required
+      className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+    ></textarea>
+  </div>
 
-          {/* ESTADOS */}
-          {estado === "ok" && (
-            <p className="text-green-600 text-sm">
-              ✅ Mensaje enviado correctamente. Te contactaremos pronto.
-            </p>
-          )}
+  {estado === "ok" && (
+    <p className="text-green-600">✅ Mensaje enviado correctamente</p>
+  )}
 
-          {estado === "error" && (
-            <p className="text-red-600 text-sm">
-              ❌ {errorMsg}
-            </p>
-          )}
+  {estado === "error" && (
+    <p className="text-red-600">❌ No se pudo enviar el mensaje.</p>
+  )}
 
-          {/* BOTÓN */}
-          <button
-            type="submit"
-            disabled={estado === "enviando"}
-            className="
-              w-full py-3 bg-blue-600 hover:bg-blue-700
-              text-white rounded-xl font-medium transition
-              disabled:opacity-60 disabled:cursor-not-allowed
-            "
-          >
-            {estado === "enviando" ? "Enviando..." : "Enviar mensaje"}
-          </button>
-        </form>
+  <button
+    disabled={estado === "enviando"}
+    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl"
+  >
+    {estado === "enviando" ? "Enviando..." : "Enviar mensaje"}
+  </button>
+</form>
       </div>
     </div>
   );
