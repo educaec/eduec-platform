@@ -4,9 +4,10 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
+  console.log("📩 API /api/contacto recibió un POST");
+
   try {
-    const body = await req.json();
-    const { nombre, email, motivo, mensaje } = body;
+    const { nombre, email, motivo, mensaje } = await req.json();
 
     if (!nombre || !email || !motivo || !mensaje) {
       return NextResponse.json(
@@ -15,10 +16,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // ******* 🔥 VALIDACIÓN CRÍTICA *******
+    // VALIDACIÓN OBLIGATORIA
     const contactEmail = process.env.CONTACT_EMAIL;
     if (!contactEmail) {
-      console.error("❌ ERROR: CONTACT_EMAIL no definido");
+      console.error("❌ CONTACT_EMAIL no está configurado en Vercel");
       return NextResponse.json(
         { success: false, error: "CONTACT_EMAIL no configurado" },
         { status: 500 }
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
-      to: contactEmail, // YA NO ES UNDEFINED
+      to: contactEmail,       // ← YA NO ES undefined
       reply_to: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
@@ -42,7 +43,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error("Error enviando mensaje:", error);
+    console.error("❌ Error enviando mensaje:", error);
     return NextResponse.json(
       { success: false, error: "Error interno en servidor" },
       { status: 500 }
