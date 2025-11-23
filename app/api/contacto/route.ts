@@ -1,51 +1,67 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
-  console.log("📩 API /api/contacto recibió un POST");
-
   try {
     const { nombre, email, motivo, mensaje } = await req.json();
 
+    // Validación
     if (!nombre || !email || !motivo || !mensaje) {
       return NextResponse.json(
-        { success: false, error: "Faltan campos obligatorios" },
+        { success: false, error: "Todos los campos son obligatorios." },
         { status: 400 }
       );
     }
 
-    // VALIDACIÓN OBLIGATORIA
+    // Verificar variable de entorno
     const contactEmail = process.env.CONTACT_EMAIL;
     if (!contactEmail) {
-      console.error("❌ CONTACT_EMAIL no está configurado en Vercel");
       return NextResponse.json(
-        { success: false, error: "CONTACT_EMAIL no configurado" },
+        { success: false, error: "CONTACT_EMAIL no configurado." },
         { status: 500 }
       );
     }
 
-    const data = await resend.emails.send({
+    // 1️⃣ Guardar en la base de datos
+    const saved = await prisma.contactMessage.create({
+      data: {
+        nombre,
+        email,
+        motivo,
+        mensaje,
+      },
+    });
+
+    // 2️⃣ Enviar correo usando Resend
+    await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
-      to: contactEmail,       // ← YA NO ES undefined
+      to: contactEmail,
       replyTo: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
         <h2>Nuevo mensaje desde la plataforma EduEc</h2>
         <p><strong>Nombre:</strong> ${nombre}</p>
-        <p><strong>Correo:</strong> ${email}</p>
+        <p><strong>Email:</strong> ${email}</p>
         <p><strong>Motivo:</strong> ${motivo}</p>
         <p><strong>Mensaje:</strong></p>
         <p>${mensaje}</p>
       `,
     });
 
-    return NextResponse.json({ success: true, data });
+    // 3️⃣ Respuesta final
+    return NextResponse.json({
+      success: true,
+      message: "Mensaje enviado y guardado correctamente.",
+      data: saved,
+    });
   } catch (error) {
-    console.error("❌ Error enviando mensaje:", error);
+    console.error("❌ Error en contacto:", error);
     return NextResponse.json(
-      { success: false, error: "Error interno en servidor" },
+      { success: false, error: "Error interno del servidor." },
       { status: 500 }
     );
   }

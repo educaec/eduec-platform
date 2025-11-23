@@ -7,14 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                 Int                 @id @default(autoincrement())
-  name               String
-  email              String              @unique
-  createdAt          DateTime            @default(now())
-  courseProgress     CourseProgress[]
-  simulatorProgress  SimulatorProgress[]
-  activity           Activity[]
+model Activity {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  description String
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id])
 }
 
 model Course {
@@ -23,38 +21,48 @@ model Course {
   description    String
   category       String
   createdAt      DateTime         @default(now())
-  courseProgress CourseProgress[]
+  CourseProgress CourseProgress[]
 }
 
 model CourseProgress {
-  id        Int    @id @default(autoincrement())
-  user      User   @relation(fields: [userId], references: [id])
-  userId    Int
-  course    Course @relation(fields: [courseId], references: [id])
-  courseId  Int
-  progress  Int    @default(0)
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  courseId Int
+  progress Int    @default(0)
+  Course   Course @relation(fields: [courseId], references: [id])
+  User     User   @relation(fields: [userId], references: [id])
 }
 
 model Simulator {
-  id                 Int                 @id @default(autoincrement())
-  title              String
-  description        String
-  simulatorProgress  SimulatorProgress[]
+  id                Int                 @id @default(autoincrement())
+  title             String
+  description       String
+  SimulatorProgress SimulatorProgress[]
 }
 
 model SimulatorProgress {
-  id          Int        @id @default(autoincrement())
-  user        User       @relation(fields: [userId], references: [id])
+  id          Int       @id @default(autoincrement())
   userId      Int
-  simulator   Simulator  @relation(fields: [simulatorId], references: [id])
   simulatorId Int
-  bestScore   Int        @default(0)
+  bestScore   Int       @default(0)
+  Simulator   Simulator @relation(fields: [simulatorId], references: [id])
+  User        User      @relation(fields: [userId], references: [id])
 }
 
-model Activity {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  description String
-  createdAt   DateTime @default(now())
+model User {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  email             String              @unique
+  createdAt         DateTime            @default(now())
+  Activity          Activity[]
+  CourseProgress    CourseProgress[]
+  SimulatorProgress SimulatorProgress[]
+}
+model ContactMessage {
+  id        String   @id @default(cuid())
+  nombre    String
+  email     String
+  motivo    String
+  mensaje   String
+  createdAt DateTime @default(now())
 }
