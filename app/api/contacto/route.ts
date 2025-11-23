@@ -16,20 +16,20 @@ export async function POST(req: Request) {
       );
     }
 
-    // VALIDAMOS EL EMAIL DE CONTACTO
+    // Validación fuerte de la variable de entorno
     const contactEmail = process.env.CONTACT_EMAIL;
 
     if (!contactEmail) {
-      console.error("❌ ERROR: CONTACT_EMAIL no está definido en Vercel");
+      console.error("❌ ERROR: CONTACT_EMAIL no está definido");
       return NextResponse.json(
-        { success: false, error: "CONTACT_EMAIL no configurado" },
+        { success: false, error: "CONTACT_EMAIL no está configurado" },
         { status: 500 }
       );
     }
 
     const data = await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
-      to: contactEmail, // ✔ Ahora es string garantizado
+      to: contactEmail, // ← ya no puede ser undefined
       reply_to: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
