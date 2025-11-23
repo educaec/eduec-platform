@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
     const { nombre, email, motivo, mensaje } = body;
 
     if (!nombre || !email || !motivo || !mensaje) {
@@ -16,20 +15,19 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validación fuerte de la variable de entorno
+    // ******* 🔥 VALIDACIÓN CRÍTICA *******
     const contactEmail = process.env.CONTACT_EMAIL;
-
     if (!contactEmail) {
-      console.error("❌ ERROR: CONTACT_EMAIL no está definido");
+      console.error("❌ ERROR: CONTACT_EMAIL no definido");
       return NextResponse.json(
-        { success: false, error: "CONTACT_EMAIL no está configurado" },
+        { success: false, error: "CONTACT_EMAIL no configurado" },
         { status: 500 }
       );
     }
 
     const data = await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
-      to: contactEmail, // ← ya no puede ser undefined
+      to: contactEmail, // YA NO ES UNDEFINED
       reply_to: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
@@ -46,7 +44,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error enviando mensaje:", error);
     return NextResponse.json(
-      { success: false, error: "Error interno en el servidor" },
+      { success: false, error: "Error interno en servidor" },
       { status: 500 }
     );
   }
