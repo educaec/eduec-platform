@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     const data = await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
       to: contactEmail,       // ← YA NO ES undefined
-      reply_to: email,
+      replyTo: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
         <h2>Nuevo mensaje desde la plataforma EduEc</h2>
