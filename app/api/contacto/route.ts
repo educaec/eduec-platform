@@ -16,9 +16,20 @@ export async function POST(req: Request) {
       );
     }
 
+    // VALIDAMOS EL EMAIL DE CONTACTO
+    const contactEmail = process.env.CONTACT_EMAIL;
+
+    if (!contactEmail) {
+      console.error("❌ ERROR: CONTACT_EMAIL no está definido en Vercel");
+      return NextResponse.json(
+        { success: false, error: "CONTACT_EMAIL no configurado" },
+        { status: 500 }
+      );
+    }
+
     const data = await resend.emails.send({
       from: "EduEc <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL,
+      to: contactEmail, // ✔ Ahora es string garantizado
       reply_to: email,
       subject: `Nuevo mensaje de contacto (${motivo})`,
       html: `
