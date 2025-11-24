@@ -1,13 +1,9 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 /*  
 ==========================================================
 📘 DASHBOARD DE APRENDIZAJE — VERSIÓN LIGHT PREMIUM
-----------------------------------------------------------
-Diseño adaptado completamente al modo claro:
-✔ Tarjetas blancas con sombras suaves
-✔ Texto gris oscuro legible
-✔ Colores coherentes con el resto del sitio
 ==========================================================
 */
 
@@ -30,7 +26,6 @@ type ActivityItem = {
   description: string;
 };
 
-/* DATOS TEMPORALES (luego serán reemplazados por BD) */
 const userProgress = {
   courses: [
     {
@@ -68,18 +63,30 @@ const userProgress = {
   ] as ActivityItem[],
 };
 
-/* Cálculo del progreso general */
 function getOverallCourseProgress(courses: CourseProgress[]) {
   if (!courses.length) return 0;
   const sum = courses.reduce((acc, c) => acc + c.progress, 0);
   return Math.round(sum / courses.length);
 }
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await getServerSession();
+  if (!session) redirect("/login");
+
   const overall = getOverallCourseProgress(userProgress.courses);
 
   return (
     <div className="pt-32 max-w-5xl mx-auto px-6">
+
+      {/* BOTÓN DE PERFIL */}
+      <div className="flex justify-end mb-8">
+        <a
+          href="/dashboard/perfil"
+          className="px-4 py-2 bg-gray-900 hover:bg-black text-white rounded-xl transition font-medium"
+        >
+          Mi Perfil
+        </a>
+      </div>
 
       {/* TÍTULO PRINCIPAL */}
       <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-4">
@@ -105,7 +112,6 @@ export default function Dashboard() {
             {overall}% completado
           </p>
 
-          {/* Barra */}
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
             <div
               className="h-full bg-blue-600 transition-all duration-500"
@@ -118,7 +124,7 @@ export default function Dashboard() {
           </p>
         </div>
 
-        {/* TARJETAS: Cursos en progreso */}
+        {/* CURSOS */}
         <div className="lg:col-span-2 space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Cursos en progreso
@@ -137,7 +143,6 @@ export default function Dashboard() {
                 Continúa donde lo dejaste y refuerza tus conocimientos.
               </p>
 
-              {/* Barra */}
               <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
                 <div
                   className="h-full bg-blue-600"
@@ -149,7 +154,6 @@ export default function Dashboard() {
                 Progreso: {course.progress}%
               </p>
 
-              {/* Botón alineado */}
               <div className="flex justify-end">
                 <a
                   href={course.url}
@@ -182,7 +186,6 @@ export default function Dashboard() {
               Mejor puntaje: {sim.bestScore}%
             </p>
 
-            {/* Barra */}
             <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
               <div
                 className="h-full bg-blue-500"
@@ -202,7 +205,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* ACTIVIDAD RECIENTE */}
+      {/* ACTIVIDAD */}
       <h2 className="text-2xl font-semibold text-gray-900 mt-16 mb-6">
         Actividad reciente
       </h2>
