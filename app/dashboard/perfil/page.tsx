@@ -2,7 +2,7 @@ import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 export default async function PerfilPage() {
-  const session = await getServerSession();
+  const session = await auth();
 
   if (!session) redirect("/login");
 

@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 /*  
@@ -71,14 +71,13 @@ function getOverallCourseProgress(courses: CourseProgress[]) {
 
 export default async function Dashboard() {
   const session = await auth();
+
   if (!session) redirect("/login");
 
   const overall = getOverallCourseProgress(userProgress.courses);
 
   return (
     <div className="pt-32 max-w-5xl mx-auto px-6">
-
-      {/* BOTÓN DE PERFIL */}
       <div className="flex justify-end mb-8">
         <a
           href="/dashboard/perfil"
@@ -88,7 +87,6 @@ export default async function Dashboard() {
         </a>
       </div>
 
-      {/* TÍTULO PRINCIPAL */}
       <h1 className="text-5xl font-bold tracking-tight text-gray-900 mb-4">
         Tu panel de aprendizaje
       </h1>
@@ -97,10 +95,7 @@ export default async function Dashboard() {
         Revisa tu progreso, continúa tus cursos y accede rápidamente a los simuladores.
       </p>
 
-      {/* GRID PRINCIPAL */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
-        {/* TARJETA: Progreso general */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-md">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Progreso general
@@ -124,7 +119,6 @@ export default async function Dashboard() {
           </p>
         </div>
 
-        {/* CURSOS */}
         <div className="lg:col-span-2 space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Cursos en progreso
@@ -167,7 +161,6 @@ export default async function Dashboard() {
         </div>
       </div>
 
-      {/* SIMULADORES */}
       <h2 className="text-2xl font-semibold text-gray-900 mt-16 mb-6">
         Simuladores
       </h2>
@@ -205,7 +198,6 @@ export default async function Dashboard() {
         ))}
       </div>
 
-      {/* ACTIVIDAD */}
       <h2 className="text-2xl font-semibold text-gray-900 mt-16 mb-6">
         Actividad reciente
       </h2>
