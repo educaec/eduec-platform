@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { auth } from "@/app/api/auth/[...nextauth]/route";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession();
-    if (!session) {
+    const session = await auth();
+
+    if (!session?.user?.id) {
       return NextResponse.json(
         { success: false, error: "No autorizado" },
         { status: 401 }
@@ -16,9 +15,8 @@ export async function POST(req: Request) {
     }
 
     const { name, email, newPassword } = await req.json();
-    const userId = session.user.id;
+    const userId = session.user.id as string;
 
-    // Validaciones
     if (!name || !email) {
       return NextResponse.json(
         { success: false, error: "Nombre y correo son obligatorios." },
@@ -26,21 +24,22 @@ export async function POST(req: Request) {
       );
     }
 
-    // Preparamos datos para actualización
-    const dataToUpdate: any = {
+    const dataToUpdate: {
+      name: string;
+      email: string;
+      password?: string;
+    } = {
       name,
       email,
     };
 
-    // Si el usuario ingresó nueva contraseña
     if (newPassword && newPassword.trim() !== "") {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       dataToUpdate.password = hashedPassword;
     }
 
-    // Actualizar usuario
     const updatedUser = await prisma.user.update({
-      where: { id: Number(userId) },
+      where: { id: userId },
       data: dataToUpdate,
     });
 
@@ -51,6 +50,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Error actualizando perfil:", error);
+
     return NextResponse.json(
       { success: false, error: "Error actualizando perfil." },
       { status: 500 }

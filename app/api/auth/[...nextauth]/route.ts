@@ -65,16 +65,27 @@ export const {
   ],
 
   callbacks: {
-    async session({ session, user, token }) {
-      if (session.user) {
-        session.user.id = user?.id ?? token.sub ?? "";
-        session.user.role =
-          (user as { role?: string } | undefined)?.role ??
-          (token as { role?: string }).role ??
-          "student";
-      }
-      return session;
-    },
+  async session({ session, user, token }) {
+    if (session.user) {
+      (session.user as { id: string; role?: string }).id =
+        user?.id ?? token.sub ?? "";
+
+      (session.user as { id: string; role?: string }).role =
+        (user as { role?: string } | undefined)?.role ??
+        (token as { role?: string }).role ??
+        "student";
+    }
+
+    return session;
+  },
+
+  async jwt({ token, user }) {
+    if (user) {
+      (token as { role?: string }).role = (user as { role?: string }).role;
+    }
+    return token;
+  },
+},
 
     async jwt({ token, user }) {
       if (user) {
