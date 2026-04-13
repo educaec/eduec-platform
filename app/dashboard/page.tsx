@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 /*  
@@ -70,7 +70,7 @@ function getOverallCourseProgress(courses: CourseProgress[]) {
 }
 
 export default async function Dashboard() {
-  const session = await getServerSession();
+  const session = await auth();
   if (!session) redirect("/login");
 
   const overall = getOverallCourseProgress(userProgress.courses);
