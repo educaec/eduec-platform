@@ -52,24 +52,38 @@ export async function POST(request: Request) {
       },
     });
 
+    const newBestScore = existing
+      ? Math.max(existing.bestScore, score)
+      : score;
+
     if (!existing) {
       await prisma.simulatorProgress.create({
         data: {
           userId: user.id,
           simulatorId: simulator.id,
-          bestScore: score,
+          bestScore: newBestScore,
         },
       });
     } else {
       await prisma.simulatorProgress.update({
         where: { id: existing.id },
         data: {
-          bestScore: Math.max(existing.bestScore, score),
+          bestScore: newBestScore,
         },
       });
     }
 
-    return NextResponse.json({ ok: true });
+    await prisma.activity.create({
+      data: {
+        userId: user.id,
+        description: `Completaste ${simulator.title} con ${score}%`,
+      },
+    });
+
+    return NextResponse.json({
+      ok: true,
+      bestScore: newBestScore,
+    });
   } catch (error) {
     console.error("Error al guardar progreso:", error);
 
