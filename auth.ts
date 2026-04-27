@@ -5,15 +5,19 @@ import { prisma } from "@/lib/prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+
   session: {
     strategy: "database",
   },
+
   providers: [Google],
+
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       if (session.user) {
-        session.user.id = String(user.id);
-        session.user.role = user.role;
+        (session.user as { id: string; role?: string }).id = String(user.id);
+        (session.user as { id: string; role?: string }).role =
+          (user as { role?: string }).role ?? "student";
       }
       return session;
     },
