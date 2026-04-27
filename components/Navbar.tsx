@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -11,12 +12,7 @@ export default function Navbar() {
   const user = session?.user
     ? {
         name: session.user.name || "Usuario",
-        avatar: session.user.image || "https://i.pravatar.cc/150?img=15",
-        overallProgress: 58,
-        courses: [
-          { title: "Fundamentos de Matemáticas", progress: 35 },
-          { title: "Lectura Crítica", progress: 20 },
-        ],
+        avatar: session.user.image || null,
       }
     : null;
 
@@ -92,15 +88,7 @@ export default function Navbar() {
       </nav>
 
       {open && user && (
-        <div
-          className="
-            fixed top-0 right-0 h-full w-80 
-            bg-white/80 backdrop-blur-2xl
-            border-l border-gray-200
-            shadow-2xl z-50 animate-slideLeft
-            p-6 overflow-y-auto
-          "
-        >
+        <div className="fixed top-0 right-0 h-full w-80 bg-white/80 backdrop-blur-2xl border-l border-gray-200 shadow-2xl z-50 animate-slideLeft p-6 overflow-y-auto">
           <button
             onClick={() => setOpen(false)}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl"
@@ -109,55 +97,43 @@ export default function Navbar() {
           </button>
 
           <div className="flex items-center gap-4 mb-8">
-            <img
-              src={user.avatar}
-              className="w-12 h-12 rounded-full border border-gray-300"
-              alt="avatar"
-            />
+            {user.avatar ? (
+              <Image
+                src={user.avatar}
+                width={48}
+                height={48}
+                className="rounded-full border border-gray-300"
+                alt="Avatar del usuario"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full border border-gray-300 bg-gray-200 flex items-center justify-center text-gray-700 font-semibold">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+            )}
+
             <div>
               <p className="text-gray-900 font-semibold">{user.name}</p>
               <p className="text-gray-500 text-sm">Estudiante</p>
             </div>
           </div>
 
-          <h3 className="text-gray-900 font-semibold mb-2">Progreso general</h3>
-
-          <p className="text-gray-700 text-sm mb-1">
-            {user.overallProgress}% completado
-          </p>
-
-          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-6">
-            <div
-              className="h-full bg-blue-600 transition-all duration-700"
-              style={{ width: `${user.overallProgress}%` }}
-            />
+          <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4">
+            <h3 className="text-gray-900 font-semibold mb-2">Progreso general</h3>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Aún no hay progreso registrado. Cuando inicies cursos o completes simuladores, aparecerá aquí.
+            </p>
           </div>
 
-          <h3 className="text-gray-900 font-semibold mb-3">
-            Cursos en progreso
-          </h3>
-
-          <div className="space-y-4 mb-6">
-            {user.courses.map((c, i) => (
-              <div key={i}>
-                <p className="text-gray-800 text-sm">{c.title}</p>
-
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
-                  <div
-                    className="h-full bg-blue-500 transition-all duration-700"
-                    style={{ width: `${c.progress}%` }}
-                  />
-                </div>
-
-                <p className="text-xs text-gray-500 mt-1">
-                  {c.progress}% completado
-                </p>
-              </div>
-            ))}
+          <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-4">
+            <h3 className="text-gray-900 font-semibold mb-2">Cursos en progreso</h3>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Aún no has iniciado ningún curso.
+            </p>
           </div>
 
           <Link
             href="/dashboard"
+            onClick={() => setOpen(false)}
             className="block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-center rounded-xl text-white font-medium transition"
           >
             Ir al Dashboard completo
