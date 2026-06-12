@@ -1,0 +1,16 @@
+[
+  {
+    "statement": "Si $x + 3 = 7$, entonces el valor de $x$ es:",
+    "options": ["2", "3", "4", "5"],
+    "correct": 2,
+    "university": "UCE",
+    "subject": "matematicas"
+  },
+  {
+    "statement": "¿Cuál es la derivada de $x^2$?",
+    "options": ["$x$", "$2x$", "$x^2$", "$2$"],
+    "correct": 1,
+    "university": "UCE",
+    "subject": "matematicas"
+  }
+]

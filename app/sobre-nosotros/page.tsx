@@ -28,16 +28,16 @@ export default function SobreNosotrosPage() {
 
         {/* NOMBRE */}
         <h2 className="text-3xl font-semibold text-gray-900 mb-2">
-          Pablo Andres Agila Hidalgo
+          EduEc
         </h2>
 
         <p className="text-gray-600 text-md mb-6">
-          Matemático, educador y desarrollador independiente.
+          Matemáticos, educadores y desarrolladores independiente.
         </p>
 
         {/* MOTIVACIÓN */}
         <p className="text-gray-700 text-lg leading-relaxed max-w-2xl">
-          Mi propósito con EduEc es garantizar el acceso al aprendizaje, romper
+          Nuestro propósito con EduEc es garantizar el acceso al aprendizaje, romper
           barreras económicas y brindar herramientas reales para que cada estudiante
           ecuatoriano pueda avanzar hacia sus metas.  
           <br /><br />
