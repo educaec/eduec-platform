@@ -14,8 +14,14 @@ type Question = {
 type AnswerState = "correct" | "incorrect" | null;
 type SimulatorMode = "test" | "practice" | null;
 
-const TEST_DURATION_SECONDS = 30 * 60; // 30 minutos
+const TEST_DURATION_SECONDS = 30 * 60;
+
+// Nombre usado por la API de progreso.
+// Se conserva para no romper el registro existente en la base.
 const SIMULATOR_TITLE = "UCE - Matemáticas";
+
+// Título que verá el usuario.
+const DISPLAY_TITLE = "Simulador general de conocimientos";
 
 function shuffleArray<T>(array: T[]): T[] {
   const copy = [...array];
@@ -28,7 +34,7 @@ function shuffleArray<T>(array: T[]): T[] {
   return copy;
 }
 
-function formatTime(seconds: number) {
+function formatTime(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
 
@@ -109,18 +115,21 @@ export default function SimuladorUCEMatematicasPage() {
   useEffect(() => {
     if (!started || mode !== "test" || finished) return;
 
-    if (timeLeft <= 0) {
-      setTimeExpired(true);
-      setFinished(true);
-      return;
-    }
+    const timer = window.setInterval(() => {
+      setTimeLeft((previousTime) => {
+        if (previousTime <= 1) {
+          window.clearInterval(timer);
+          setTimeExpired(true);
+          setFinished(true);
+          return 0;
+        }
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+        return previousTime - 1;
+      });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [started, mode, timeLeft, finished]);
+    return () => window.clearInterval(timer);
+  }, [started, mode, finished]);
 
   async function saveProgress(finalScore: number) {
     try {
@@ -141,6 +150,7 @@ export default function SimuladorUCEMatematicasPage() {
       }
 
       const text = await res.text().catch(() => "");
+
       console.error("No se pudo guardar el progreso:", {
         status: res.status,
         statusText: res.statusText,
@@ -152,8 +162,8 @@ export default function SimuladorUCEMatematicasPage() {
       } else {
         setSaveMessage("No se pudo guardar el resultado.");
       }
-    } catch (error) {
-      console.error("No se pudo guardar el progreso:", error);
+    } catch (err) {
+      console.error("No se pudo guardar el progreso:", err);
       setSaveMessage("No se pudo guardar el resultado.");
     }
   }
@@ -162,13 +172,14 @@ export default function SimuladorUCEMatematicasPage() {
     if (!finished || hasSavedResult.current || !started) return;
 
     hasSavedResult.current = true;
-    saveProgress(score);
+    void saveProgress(score);
   }, [finished, score, started]);
 
   const totalQuestions = questions.length;
 
   const progressPercent = useMemo(() => {
     if (totalQuestions === 0) return 0;
+
     return ((current + 1) / totalQuestions) * 100;
   }, [current, totalQuestions]);
 
@@ -185,10 +196,10 @@ export default function SimuladorUCEMatematicasPage() {
     setTimeExpired(false);
     setSaveMessage(null);
     hasSavedResult.current = false;
-    setRetryKey((prev) => prev + 1);
+    setRetryKey((previous) => previous + 1);
   };
 
-  const startSimulator = (selectedMode: SimulatorMode) => {
+  const startSimulator = (selectedMode: Exclude<SimulatorMode, null>) => {
     setMode(selectedMode);
     setStarted(true);
     setTimeLeft(TEST_DURATION_SECONDS);
@@ -200,10 +211,14 @@ export default function SimuladorUCEMatematicasPage() {
   const handleCheckAnswer = () => {
     if (selected === null || answered) return;
 
-    const isCorrect = selected === questions[current].correct;
+    const question = questions[current];
+
+    if (!question) return;
+
+    const isCorrect = selected === question.correct;
 
     if (isCorrect) {
-      setScore((prev) => prev + 1);
+      setScore((previous) => previous + 1);
       setAnswerState("correct");
     } else {
       setAnswerState("incorrect");
@@ -216,7 +231,7 @@ export default function SimuladorUCEMatematicasPage() {
     if (!answered) return;
 
     if (current + 1 < questions.length) {
-      setCurrent((prev) => prev + 1);
+      setCurrent((previous) => previous + 1);
       setSelected(null);
       setAnswered(false);
       setAnswerState(null);
@@ -227,101 +242,114 @@ export default function SimuladorUCEMatematicasPage() {
 
   if (loading) {
     return (
-      <div className="pt-32 px-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Simulador UCE - Matemáticas</h1>
+      <main className="mx-auto max-w-4xl px-6 pt-32">
+        <h1 className="mb-8 text-3xl font-bold">{DISPLAY_TITLE}</h1>
         <p>Cargando preguntas...</p>
-      </div>
+      </main>
     );
   }
 
   if (error) {
     return (
-      <div className="pt-32 px-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Simulador UCE - Matemáticas</h1>
-        <div className="border rounded-2xl p-6 bg-white shadow-sm">
-          <p className="text-red-600 mb-4">{error}</p>
+      <main className="mx-auto max-w-4xl px-6 pt-32">
+        <h1 className="mb-8 text-3xl font-bold">{DISPLAY_TITLE}</h1>
+
+        <div className="rounded-2xl border bg-white p-6 shadow-sm">
+          <p className="mb-4 text-red-600">{error}</p>
+
           <button
             onClick={restartSimulator}
-            className="px-6 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition"
+            className="rounded-xl bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
           >
             Reintentar
           </button>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="pt-32 px-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Simulador UCE - Matemáticas</h1>
-        <div className="border rounded-2xl p-6 bg-white shadow-sm">
-          <p className="mb-4">No hay preguntas disponibles para este simulador.</p>
+      <main className="mx-auto max-w-4xl px-6 pt-32">
+        <h1 className="mb-8 text-3xl font-bold">{DISPLAY_TITLE}</h1>
+
+        <div className="rounded-2xl border bg-white p-6 shadow-sm">
+          <p className="mb-4">
+            No hay preguntas disponibles para este simulador.
+          </p>
+
           <button
             onClick={restartSimulator}
-            className="px-6 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition"
+            className="rounded-xl bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
           >
             Recargar
           </button>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (!started) {
     return (
-      <div className="pt-32 px-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Simulador UCE - Matemáticas</h1>
+      <main className="mx-auto max-w-4xl px-6 pt-32">
+        <h1 className="mb-8 text-3xl font-bold">{DISPLAY_TITLE}</h1>
 
-        <div className="border rounded-2xl p-8 bg-white shadow-sm space-y-6">
-          <p className="text-gray-700 leading-relaxed">
-            Antes de comenzar, elige el modo en el que deseas rendir este simulador.
+        <div className="space-y-6 rounded-2xl border bg-white p-8 shadow-sm">
+          <p className="leading-relaxed text-gray-700">
+            Antes de comenzar, elige el modo en el que deseas rendir este
+            simulador.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <button
               onClick={() => startSimulator("test")}
-              className="text-left border rounded-2xl p-6 hover:bg-gray-50 transition"
+              className="rounded-2xl border p-6 text-left transition hover:bg-gray-50"
             >
-              <h2 className="text-xl font-semibold mb-2">
+              <h2 className="mb-2 text-xl font-semibold">
                 Iniciar simulador tipo test
               </h2>
+
               <p className="text-gray-600">
-                Modo con cronómetro de 30 minutos. Ideal para practicar bajo presión de tiempo.
+                Modo con cronómetro de 30 minutos. Ideal para practicar bajo
+                presión de tiempo.
               </p>
             </button>
 
             <button
               onClick={() => startSimulator("practice")}
-              className="text-left border rounded-2xl p-6 hover:bg-gray-50 transition"
+              className="rounded-2xl border p-6 text-left transition hover:bg-gray-50"
             >
-              <h2 className="text-xl font-semibold mb-2">
+              <h2 className="mb-2 text-xl font-semibold">
                 Iniciar simulador tipo práctica
               </h2>
+
               <p className="text-gray-600">
-                Modo sin cronómetro. Ideal para resolver con calma y estudiar el contenido.
+                Modo sin cronómetro. Ideal para resolver con calma y estudiar
+                el contenido.
               </p>
             </button>
           </div>
 
           <Link
-            href="/simulador/universidades-publicas"
-            className="inline-block px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 transition"
+            href="/simulador"
+            className="inline-block rounded-xl border border-gray-300 px-6 py-3 transition hover:bg-gray-100"
           >
-            Volver a universidades
+            Volver a simuladores
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (finished) {
     const percentage = Math.round((score / questions.length) * 100);
 
-    let message = "Buen intento. Sigue practicando para mejorar tu rendimiento.";
+    let message =
+      "Buen intento. Sigue practicando para mejorar tu rendimiento.";
 
     if (percentage >= 90) {
-      message = "Excelente resultado. Tienes un dominio muy sólido de este bloque.";
+      message =
+        "Excelente resultado. Tienes un dominio muy sólido de este bloque.";
     } else if (percentage >= 70) {
       message = "Muy buen trabajo. Vas por buen camino.";
     } else if (percentage >= 50) {
@@ -329,18 +357,19 @@ export default function SimuladorUCEMatematicasPage() {
     }
 
     return (
-      <div className="pt-32 px-6 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Resultado final</h1>
+      <main className="mx-auto max-w-4xl px-6 pt-32">
+        <h1 className="mb-8 text-3xl font-bold">Resultado final</h1>
 
-        <div className="border rounded-2xl p-8 bg-white shadow-sm space-y-4">
+        <div className="space-y-4 rounded-2xl border bg-white p-8 shadow-sm">
           {timeExpired && (
-            <div className="p-4 rounded-xl bg-yellow-100 text-yellow-800">
+            <div className="rounded-xl bg-yellow-100 p-4 text-yellow-800">
               El tiempo se ha agotado. El simulador finalizó automáticamente.
             </div>
           )}
 
           <p className="text-xl">
-            Obtuviste <strong>{score}</strong> de <strong>{questions.length}</strong> preguntas correctas.
+            Obtuviste <strong>{score}</strong> de{" "}
+            <strong>{questions.length}</strong> preguntas correctas.
           </p>
 
           <p className="text-lg">
@@ -352,7 +381,9 @@ export default function SimuladorUCEMatematicasPage() {
           <p className="text-sm text-gray-500">
             Modo utilizado:{" "}
             <strong>
-              {mode === "test" ? "Tipo test con cronómetro" : "Tipo práctica sin cronómetro"}
+              {mode === "test"
+                ? "Tipo test con cronómetro"
+                : "Tipo práctica sin cronómetro"}
             </strong>
           </p>
 
@@ -371,46 +402,47 @@ export default function SimuladorUCEMatematicasPage() {
           <div className="flex flex-wrap gap-4 pt-2">
             <button
               onClick={restartSimulator}
-              className="px-6 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition"
+              className="rounded-xl bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
             >
               Reintentar
             </button>
 
             <Link
-              href="/simulador/universidades-publicas"
-              className="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 transition"
+              href="/simulador"
+              className="rounded-xl border border-gray-300 px-6 py-3 transition hover:bg-gray-100"
             >
-              Volver a universidades
+              Volver a simuladores
             </Link>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   const question = questions[current];
 
   return (
-    <div className="pt-32 px-6 max-w-4xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold">Simulador UCE - Matemáticas</h1>
+    <main className="mx-auto max-w-4xl px-6 pt-32">
+      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <h1 className="text-3xl font-bold">{DISPLAY_TITLE}</h1>
 
         {mode === "test" && (
-          <div className="px-4 py-2 rounded-xl bg-gray-900 text-white font-semibold">
+          <div className="rounded-xl bg-gray-900 px-4 py-2 font-semibold text-white">
             Tiempo restante: {formatTime(timeLeft)}
           </div>
         )}
       </div>
 
       <div className="mb-6">
-        <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+        <div className="mb-2 flex items-center justify-between text-sm text-gray-600">
           <span>
             Pregunta {current + 1} de {questions.length}
           </span>
+
           <span>{Math.round(progressPercent)}%</span>
         </div>
 
-        <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-3 w-full overflow-hidden rounded-full bg-gray-200">
           <div
             className="h-full bg-blue-600 transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
@@ -418,10 +450,10 @@ export default function SimuladorUCEMatematicasPage() {
         </div>
       </div>
 
-      <div className="border rounded-2xl p-6 shadow-sm bg-white">
-        <p className="font-semibold text-xl mb-6">
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <div className="mb-6 text-xl font-semibold">
           <LatexText text={question.statement} />
-        </p>
+        </div>
 
         <div className="space-y-3">
           {question.options.map((option, index) => {
@@ -431,27 +463,26 @@ export default function SimuladorUCEMatematicasPage() {
               answered && isSelected && index !== question.correct;
 
             let className =
-              "w-full text-left px-4 py-3 border rounded-lg transition ";
+              "w-full rounded-lg border px-4 py-3 text-left transition ";
 
             if (answered) {
               if (isCorrectOption) {
-                className += "bg-green-100 border-green-600 text-green-900";
+                className +=
+                  "bg-green-100 border-green-600 text-green-900";
               } else if (isWrongSelected) {
                 className += "bg-red-100 border-red-600 text-red-900";
               } else {
                 className += "bg-gray-50 border-gray-200 text-gray-700";
               }
+            } else if (isSelected) {
+              className += "bg-blue-600 text-white border-blue-600";
             } else {
-              if (isSelected) {
-                className += "bg-blue-600 text-white border-blue-600";
-              } else {
-                className += "bg-white hover:bg-gray-100 border-gray-300";
-              }
+              className += "bg-white hover:bg-gray-100 border-gray-300";
             }
 
             return (
               <button
-                key={index}
+                key={`${question.id}-${index}`}
                 onClick={() => {
                   if (!answered) setSelected(index);
                 }}
@@ -466,7 +497,7 @@ export default function SimuladorUCEMatematicasPage() {
 
         {answered && (
           <div
-            className={`mt-6 p-4 rounded-xl ${
+            className={`mt-6 rounded-xl p-4 ${
               answerState === "correct"
                 ? "bg-green-100 text-green-800"
                 : "bg-red-100 text-red-800"
@@ -483,9 +514,9 @@ export default function SimuladorUCEMatematicasPage() {
             <button
               onClick={handleCheckAnswer}
               disabled={selected === null}
-              className={`px-6 py-3 rounded-xl font-medium transition ${
+              className={`rounded-xl px-6 py-3 font-medium transition ${
                 selected === null
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  ? "cursor-not-allowed bg-gray-300 text-gray-500"
                   : "bg-blue-600 text-white hover:bg-blue-700"
               }`}
             >
@@ -494,7 +525,7 @@ export default function SimuladorUCEMatematicasPage() {
           ) : (
             <button
               onClick={handleNext}
-              className="px-6 py-3 rounded-xl font-medium bg-blue-600 text-white hover:bg-blue-700 transition"
+              className="rounded-xl bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
             >
               {current + 1 < questions.length ? "Siguiente" : "Finalizar"}
             </button>
@@ -502,12 +533,12 @@ export default function SimuladorUCEMatematicasPage() {
 
           <button
             onClick={restartSimulator}
-            className="px-6 py-3 rounded-xl font-medium border border-gray-300 hover:bg-gray-100 transition"
+            className="rounded-xl border border-gray-300 px-6 py-3 font-medium transition hover:bg-gray-100"
           >
             Reiniciar
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

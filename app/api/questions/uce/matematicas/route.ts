@@ -5,8 +5,8 @@ export async function GET() {
   try {
     const questions = await prisma.question.findMany({
       where: {
-        university: "UCE",
-        subject: "matematicas",
+        university: "MODELO",
+        subject: "conocimientos",
       },
       orderBy: {
         createdAt: "asc",
