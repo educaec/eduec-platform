@@ -25,6 +25,9 @@ async function main() {
     throw new Error("El archivo JSON debe contener un arreglo de preguntas.");
   }
 
+  let createdCount = 0;
+  let skippedCount = 0;
+
   for (const question of questions) {
     if (
       !question.statement ||
@@ -37,6 +40,20 @@ async function main() {
       throw new Error(`Pregunta inválida: ${JSON.stringify(question)}`);
     }
 
+    const existing = await prisma.question.findFirst({
+      where: {
+        statement: question.statement,
+        university: question.university,
+        subject: question.subject,
+      },
+    });
+
+    if (existing) {
+      skippedCount++;
+      console.log(`Pregunta omitida por duplicado: ${question.statement}`);
+      continue;
+    }
+
     await prisma.question.create({
       data: {
         statement: question.statement,
@@ -46,9 +63,12 @@ async function main() {
         subject: question.subject,
       },
     });
+
+    createdCount++;
   }
 
-  console.log(`Se cargaron ${questions.length} preguntas correctamente.`);
+  console.log(`Preguntas nuevas cargadas: ${createdCount}`);
+  console.log(`Preguntas omitidas por duplicado: ${skippedCount}`);
 }
 
 main()
