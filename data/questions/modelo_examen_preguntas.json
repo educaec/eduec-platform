@@ -1,0 +1,704 @@
+[
+  {
+    "statement": "Una persona come huevos o queso en el desayuno cada mañana durante enero. Si come huevos 18 mañanas y queso 25 mañanas, ¿cuántas mañanas come ambos alimentos?",
+    "options": [
+      "13",
+      "15",
+      "11",
+      "21",
+      "12"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "El producto del primer y quinto término de una progresión aritmética de términos positivos es 55. Si la diferencia común es 1.5, ¿cuál es el tercer término?",
+    "options": [
+      "8",
+      "7",
+      "11",
+      "10",
+      "12"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "¿Cuál es el polígono cuyo número de diagonales es igual al número de lados?",
+    "options": [
+      "Decágono",
+      "Octógono",
+      "Hexágono",
+      "Pentágono",
+      "Cuadrilátero"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "A un arco de circunferencia le corresponde una cuerda de 20 m y una flecha de 2 m. ¿Cuál es el radio de la circunferencia?",
+    "options": [
+      "16 m",
+      "36 m",
+      "26 m",
+      "14 m",
+      "15 m"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "Un triángulo rectángulo tiene catetos de 15 m y 20 m. ¿Cuánto mide la altura relativa a la hipotenusa?",
+    "options": [
+      "12 m",
+      "10 m",
+      "11 m",
+      "9 m",
+      "8 m"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "Si se forman filas de 7 niños sobran 5, pero faltarían 4 niños para formar 3 filas más de 6 niños. ¿Cuántos niños son?",
+    "options": [
+      "58",
+      "78",
+      "68",
+      "48",
+      "38"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "¿Cuántos números pares existen desde 24 hasta 370, incluyendo ambos extremos?",
+    "options": [
+      "164",
+      "184",
+      "154",
+      "174",
+      "194"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "Un hombre empuja una caja que pesa 1000 N y realiza un desplazamiento horizontal de 20 m. ¿Cuál es el trabajo realizado por el peso?",
+    "options": [
+      "20000 J",
+      "2000 J",
+      "200 J",
+      "20 J",
+      "0 J"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "Se tiene una carga de 5×10^-5 C. ¿Cuál es el potencial eléctrico a una distancia de 3 m, expresado en kilovoltios?",
+    "options": [
+      "15",
+      "150",
+      "1500",
+      "450",
+      "4500"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Cuál de las siguientes proposiciones es correcta? I. En el núcleo existen protones y neutrones. II. Los neutrones tienen carga positiva. III. Los protones son nucleones positivos.",
+    "options": [
+      "Solo I",
+      "Solo II",
+      "Solo III",
+      "I y III",
+      "II y III"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Qué lista de elementos no pertenece a un mismo grupo o familia química?",
+    "options": [
+      "Li - Rb - K",
+      "O - S - Se",
+      "Ba - Ca - Be",
+      "I - Br - Cl",
+      "Ne - Si - Fe"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "Un electrón será más estable cuando se encuentra en el orbital:",
+    "options": [
+      "3s",
+      "2p",
+      "2s",
+      "5d",
+      "4f"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Qué normalidad representa una solución 2.0 M de ácido nítrico?",
+    "options": [
+      "5.4 N",
+      "2.0 N",
+      "3.3 N",
+      "2.6 N",
+      "1.8 N"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Cuántos átomos de oxígeno presenta la molécula del ácido carbónico?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Qué hueso se relaciona directamente con el sentido del oído?",
+    "options": [
+      "Parietal",
+      "Temporal",
+      "Occipital",
+      "Frontal",
+      "Esfenoides"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Qué arteria irriga al corazón?",
+    "options": [
+      "Pulmonar",
+      "Aorta",
+      "Coronaria",
+      "Safena",
+      "Radial"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Cuál es el elemento químico característico de los ácidos nucleicos?",
+    "options": [
+      "Carbono",
+      "Fósforo",
+      "Nitrógeno",
+      "Oxígeno",
+      "Hidrógeno"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "El conjunto de poblaciones de seres vivos que habitan un espacio constituye:",
+    "options": [
+      "Un nicho ecológico",
+      "El hábitat",
+      "Una comunidad",
+      "Una población",
+      "Un ecosistema"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Qué característica de los seres vivos implica cambio genético a través de generaciones?",
+    "options": [
+      "Relación",
+      "Adaptación",
+      "Metabolismo",
+      "Homeostasis",
+      "Evolución"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "La explotación de recursos mineros pertenece al sector productivo:",
+    "options": [
+      "Servicios",
+      "Terciario",
+      "Secundario",
+      "Primario",
+      "Ensamblaje"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Cómo se denomina el lugar donde los consumidores adquieren habitualmente bienes y servicios?",
+    "options": [
+      "Fábrica",
+      "Banco",
+      "Bolsa de valores",
+      "Mercado",
+      "Salón de belleza"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "En un intercambio económico, los flujos reales están representados por:",
+    "options": [
+      "Dinero",
+      "Cheques",
+      "Tarjetas de crédito",
+      "Bienes",
+      "Letras de cambio"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "El capital social de una sociedad anónima está representado en:",
+    "options": [
+      "Bonos",
+      "Acciones",
+      "Efectivo",
+      "Bienes",
+      "Participaciones"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "Existe monopolio cuando en el mercado produce y vende:",
+    "options": [
+      "Una empresa",
+      "Dos empresas",
+      "Varias empresas",
+      "Pocas empresas",
+      "Muchas empresas"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "La interacción entre oferta y demanda genera:",
+    "options": [
+      "Ingreso de un trabajador",
+      "Desempleo",
+      "Precio de equilibrio",
+      "Escasez",
+      "Exceso de producción"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "La escasez de un bien generalmente ocasiona que su precio:",
+    "options": [
+      "Disminuya",
+      "Se mantenga",
+      "Se incremente",
+      "No se altere",
+      "Sea siempre cero"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "Marque la alternativa que presenta sinonimia.",
+    "options": [
+      "Miriam vende y compra bienes inmuebles.",
+      "La casa de mi gato es simple como la de otros felinos.",
+      "En esta cuadra hay tiendas de productos lácteos.",
+      "La familia pasó buenas vacaciones en el campo.",
+      "Los alhelíes son bonitos; también son hermosos los lirios."
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "En la oración «cuando Beatriz interpretó aquella melodía, el público la aplaudió con gran emoción», ¿cuántas tildes se omitirían si se escribiera sin acentos?",
+    "options": [
+      "Cuatro",
+      "Seis",
+      "Cinco",
+      "Tres",
+      "Siete"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Complete correctamente: «___ ___ he faltado mucho y no ___ ___ hacer para remediarlo».",
+    "options": [
+      "Se - que - se - que",
+      "Sé - qué - sé - qué",
+      "Sé - que - sé - qué",
+      "Sé - que - se - que",
+      "Se - qué - sé - qué"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "¿Cuál alternativa presenta tildación incorrecta?",
+    "options": [
+      "No sé qué me pasó la otra noche.",
+      "Sé responsable con tus deberes.",
+      "Espero que sé vaya rápido.",
+      "Aunque sé lo que piensas, no te entiendo.",
+      "Pablo, sé más hábil con los números."
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "En «Ella es, entre mis amigas, la más apreciada», la coma empleada es:",
+    "options": [
+      "Vocativa",
+      "Hiperbática",
+      "Explicativa",
+      "Elíptica",
+      "Apositiva"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "En «Lo de Pedro se lo dieron a José y a Rubén», ¿cuántas preposiciones hay?",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "1",
+      "2"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "La capacidad de reconocer que hemos realizado un acto se denomina:",
+    "options": [
+      "Responsabilidad",
+      "Libertad",
+      "Conciencia",
+      "Respeto",
+      "Justicia"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "logico"
+  },
+  {
+    "statement": "Si Ana tiene visa, entonces viaja a Colombia. Ana no viaja a Colombia. Por lo tanto, Ana no tiene visa. Esta inferencia es:",
+    "options": [
+      "Válida",
+      "Falaz",
+      "Inválida",
+      "Verdadera",
+      "Falsa"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "logico"
+  },
+  {
+    "statement": "La escritura empleada por la cultura egipcia se llamaba:",
+    "options": [
+      "Cuneiforme",
+      "Alfabeto fonético",
+      "Jeroglífica",
+      "Lineal A",
+      "Lineal B"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "Las principales fuentes de energía de la Segunda Revolución Industrial fueron:",
+    "options": [
+      "Vapor y electricidad",
+      "Viento y agua",
+      "Vapor y carbón",
+      "Electricidad y viento",
+      "Petróleo y electricidad"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "¿Cuál es el tema central del texto presentado sobre la producción escrita?",
+    "options": [
+      "Lectura y escritura",
+      "La escritura",
+      "Nominalización",
+      "Sistemas de comunicación",
+      "Neologismos"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el sinónimo de «absolver».",
+    "options": [
+      "Incendiar",
+      "Perdonar",
+      "Inflamar",
+      "Bendecir",
+      "Ofender"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el sinónimo de «preámbulo».",
+    "options": [
+      "Exordio",
+      "Moderación",
+      "Sequedad",
+      "Debilidad",
+      "Represión"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el sinónimo de «precario».",
+    "options": [
+      "Amable",
+      "Educado",
+      "Harapiento",
+      "Inestable",
+      "Indiferente"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el sinónimo de «suspicaz».",
+    "options": [
+      "Alegre",
+      "Sutil",
+      "Perspicaz",
+      "Siniestro",
+      "Desconfiado"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el sinónimo de «fastuoso».",
+    "options": [
+      "Lujoso",
+      "Pícaro",
+      "Bellaco",
+      "Probo",
+      "Rufián"
+    ],
+    "correct": 0,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el antónimo de «infancia».",
+    "options": [
+      "Neonato",
+      "Senectud",
+      "Conocido",
+      "Adolescente",
+      "Recuerdo"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el antónimo de «izar».",
+    "options": [
+      "Alcanzar",
+      "Embestir",
+      "Punzar",
+      "Endulzar",
+      "Arriar"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Seleccione el antónimo de «austral».",
+    "options": [
+      "Inquietud",
+      "Oriental",
+      "Boreal",
+      "Inocuidad",
+      "Aciago"
+    ],
+    "correct": 2,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Complete la analogía: ELOGIO : CENSURA ::",
+    "options": [
+      "Alabanza : escrito",
+      "Mendaz : mentira",
+      "Orgullo : soberbio",
+      "Encomio : difamación",
+      "Diatriba : insulto"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Complete la analogía: PENITENCIA : PECADO ::",
+    "options": [
+      "Caída : despegue",
+      "Ausencia : presencia",
+      "Desfalco : ruina",
+      "Condecoración : premio",
+      "Condena : crimen"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Complete: «El hombre que trabaja ___ merece una buena ___».",
+    "options": [
+      "Motivado - crítica",
+      "Solo - retribución",
+      "Apenado - consolación",
+      "Perfecto - recompensa",
+      "Bien - remuneración"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Si un objeto es lanzado hacia arriba, la gravedad reduce gradualmente su movimiento hasta producir primero una ___ momentánea y luego su ___.",
+    "options": [
+      "Explosión - desaparición",
+      "Detención - caída",
+      "Caída - detención",
+      "Vuelta - precipitación",
+      "Revolución - aceleración"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "verbal"
+  },
+  {
+    "statement": "Al expresar 31/5 como número mixto se obtiene:",
+    "options": [
+      "5 1/6",
+      "6 1/5",
+      "5 1/5",
+      "6 5/1",
+      "31 1/5"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "En la sucesión 31, 34, 39, 46, ..., ¿cuál es el siguiente término?",
+    "options": [
+      "53",
+      "55",
+      "57",
+      "59",
+      "61"
+    ],
+    "correct": 1,
+    "university": "MODELO",
+    "subject": "numerico"
+  },
+  {
+    "statement": "¿Cuál es el organismo que dirige la política monetaria en Perú?",
+    "options": [
+      "Congreso",
+      "Ministerio de Economía",
+      "Superintendencia de Banca",
+      "Banco Central de Reserva",
+      "Presidencia del Consejo de Ministros"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "La tuberculosis es producida por:",
+    "options": [
+      "Bacilo de Hansen",
+      "Bacilo de Welch",
+      "Bacilo de Weeks",
+      "Bacilo de Koch",
+      "Bacilo de Ducrey"
+    ],
+    "correct": 3,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  },
+  {
+    "statement": "El Informe PISA es:",
+    "options": [
+      "Un estudio de la FAO",
+      "Una investigación deportiva",
+      "Una tesis sobre petróleo",
+      "Una investigación de física",
+      "Un estudio internacional de calidad educativa"
+    ],
+    "correct": 4,
+    "university": "MODELO",
+    "subject": "conocimientos"
+  }
+]

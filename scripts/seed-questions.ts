@@ -13,12 +13,25 @@ type QuestionInput = {
 };
 
 async function main() {
+  const fileName = process.argv[2] ?? "uce-matematicas.json";
+
   const filePath = path.join(
     process.cwd(),
-    "data/questions/uce-matematicas.json"
+    "data",
+    "questions",
+    fileName
   );
 
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`No existe el archivo: ${filePath}`);
+  }
+
   const raw = fs.readFileSync(filePath, "utf-8");
+
+  if (!raw.trim()) {
+    throw new Error(`El archivo está vacío: ${filePath}`);
+  }
+
   const questions = JSON.parse(raw) as QuestionInput[];
 
   if (!Array.isArray(questions)) {
@@ -34,10 +47,14 @@ async function main() {
       !Array.isArray(question.options) ||
       question.options.length < 2 ||
       typeof question.correct !== "number" ||
+      question.correct < 0 ||
+      question.correct >= question.options.length ||
       !question.university ||
       !question.subject
     ) {
-      throw new Error(`Pregunta inválida: ${JSON.stringify(question)}`);
+      throw new Error(
+        `Pregunta inválida: ${JSON.stringify(question)}`
+      );
     }
 
     const existing = await prisma.question.findFirst({
@@ -50,7 +67,9 @@ async function main() {
 
     if (existing) {
       skippedCount++;
-      console.log(`Pregunta omitida por duplicado: ${question.statement}`);
+      console.log(
+        `Pregunta omitida por duplicado: ${question.statement}`
+      );
       continue;
     }
 
@@ -67,8 +86,11 @@ async function main() {
     createdCount++;
   }
 
+  console.log(`Archivo procesado: ${fileName}`);
   console.log(`Preguntas nuevas cargadas: ${createdCount}`);
-  console.log(`Preguntas omitidas por duplicado: ${skippedCount}`);
+  console.log(
+    `Preguntas omitidas por duplicado: ${skippedCount}`
+  );
 }
 
 main()
