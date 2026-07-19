@@ -9,9 +9,10 @@ type University = {
 
 const publicUniversities: University[] = [
   {
-    name: "Universidad Central del Ecuador",
-    description: "Simuladores de conocimientos y aptitudes para admisión.",
-    href: "/simulador/universidades-publicas/uce/matematicas",
+    name: "Simulador general de conocimientos",
+    description:
+      "Practica con preguntas de matemática, ciencias, lenguaje, razonamiento y conocimientos generales.",
+    href: "/simulador/modelo/conocimientos",
     available: true,
   },
   {
@@ -60,7 +61,7 @@ function UniversityCard({ university }: { university: University }) {
           href={university.href}
           className="inline-flex w-fit rounded-xl bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700"
         >
-          Ver simuladores
+          Ver simulador
         </Link>
       ) : (
         <span className="inline-flex w-fit cursor-not-allowed rounded-xl bg-gray-100 px-5 py-2.5 font-medium text-gray-500">
@@ -80,8 +81,8 @@ export default function SimuladorPage() {
         </h1>
 
         <p className="max-w-3xl text-lg leading-relaxed text-gray-600">
-          Selecciona una universidad y practica con bancos de preguntas
-          organizados por áreas de conocimiento y aptitudes.
+          Selecciona una opción y practica con bancos de preguntas organizados
+          por áreas de conocimiento y aptitudes.
         </p>
       </header>
 
